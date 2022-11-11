@@ -19,8 +19,11 @@ import java.util.UUID;
 public class OrderItem {
     @Id
     @GeneratedValue
+    @Type(type = ("uuid-char"))
     private UUID Id;
+    @Type(type = ("uuid-char"))
     private UUID orderId;
+    @Type(type = ("uuid-char"))
     private UUID itemId;
     private Integer quantity;
     private Double priceTotal;

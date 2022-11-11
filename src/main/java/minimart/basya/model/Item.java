@@ -20,6 +20,7 @@ import java.util.UUID;
 public class Item {
     @Id
     @GeneratedValue
+    @Type(type = ("uuid-char"))
     private UUID Id;
     private String name;
     private String decription;
@@ -27,6 +28,8 @@ public class Item {
     private Double price;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    @Type(type = ("uuid-char"))
     private UUID createdBy;
+    @Type(type = ("uuid-char"))
     private UUID updatedBy;
 }

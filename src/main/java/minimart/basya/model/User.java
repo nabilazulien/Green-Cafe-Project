@@ -21,6 +21,7 @@ import java.util.UUID;
 public class User {
     @Id
     @GeneratedValue
+    @Type(type = ("uuid-char"))
     private UUID Id;
     private String fullName;
     private String email;

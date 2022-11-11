@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -31,5 +32,14 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
         log.info("save user berhasil");
         return user;
+    }
+
+    @Override
+    public User delete(UUID id) {
+        Optional<User> user = userRepository.findById(id);
+        userRepository.delete(user.get());
+        log.info("user telah dihapus dengan id "+id);
+        return null;
+
     }
 }

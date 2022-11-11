@@ -20,6 +20,7 @@ import java.util.UUID;
 public class PaymentType {
     @Id
     @GeneratedValue
+    @Type(type = ("uuid-char"))
     private UUID Id;
     private String name;
     private String code;

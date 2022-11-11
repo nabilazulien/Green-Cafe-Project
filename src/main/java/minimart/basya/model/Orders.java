@@ -20,12 +20,15 @@ import java.util.UUID;
 public class Orders {
     @Id
     @GeneratedValue
+    @Type(type = ("uuid-char"))
     private UUID Id;
     private String code;
+    @Type(type = ("uuid-char"))
     private UUID cashier;
     private Double total;
     private Double subTotal;
     private Double tax;
+    @Type(type = ("uuid-char"))
     private UUID paymentTypeId;
     private LocalDate createdAt;
 }

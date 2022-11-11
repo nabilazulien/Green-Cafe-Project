@@ -20,8 +20,9 @@ import java.util.UUID;
 public class JobPosition {
     @Id
     @GeneratedValue
+    @Type(type = ("uuid-char"))
     private UUID id;
-    private String tittle;
+    private String title;
     private Double salary;
     private LocalDateTime createdAt;
 }
