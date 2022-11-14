@@ -39,23 +39,22 @@ CREATE TABLE if not exists`job_position` (
 );
 delete from job_position;
 insert into job_position(id, title, salary, created_at)
-values ("d47c55a2-619a-11ed-b70a-3c970ecfa524", "chef", 5000000, now());
+values ("b47a5270-63f7-11ed-b70a-3c970ecfa524", "chef", 5000000, now());
 
 insert into job_position(id, title, salary, created_at)
-values ("d48f0d4e-619a-11ed-b70a-3c970ecfa524", "waitress", 3500000, now());
+values ("b48ef152-63f7-11ed-b70a-3c970ecfa524v", "waitress", 3500000, now());
 
 insert into job_position(id, title, salary, created_at)
-values ("d4993065-619a-11ed-b70a-3c970ecfa524", "cashier", 4000000, now());
+values ("b4a34f3e-63f7-11ed-b70a-3c970ecfa524", "cashier", 4000000, now());
 
 insert into job_position(id, title, salary, created_at)
-values ("d4a1af2c-619a-11ed-b70a-3c970ecfa524", "manager", 7000000, now());
+values ("b4b5d408-63f7-11ed-b70a-3c970ecfa524", "manager", 7000000, now());
 
 insert into job_position(id, title, salary, created_at)
-values ("d4af23dd-619a-11ed-b70a-3c970ecfa524", "janitor", 3000000, now());
+values ("b4ff30f4-63f7-11ed-b70a-3c970ecfa524", "janitor", 3000000, now());
 
 insert into job_position(id, title, salary, created_at)
-values ("d4af37dt-619a-11ed-b70a-3c970ecfa524", "dishwasher", 2500000, now());
+values ("b51623c4-63f7-11ed-b70a-3c970ecfa524", "dishwasher", 2500000, now());
 
 insert into job_position(id, title, salary, created_at)
-values ("d4af14fu-619a-11ed-b70a-3c970ecfa524", "barista", 4500000, now());
-
+values ("b533372a-63f7-11ed-b70a-3c970ecfa524", "barista", 4500000, now());
