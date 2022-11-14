@@ -22,7 +22,7 @@ public class ItemServiceImpl implements ItemService {
         item.setName(itemRequest.getName());
         item.setDecription(itemRequest.getDescription());
         item.setCategory(itemRequest.getCategory());
-        item.setPrice(itemRequest.getPrice());
+        item.setPrice(Double.valueOf(itemRequest.getPrice()));
         item.setCreatedAt(LocalDateTime.now());
         item.setCreatedBy(itemRequest.getCreatedBy());
         itemRepository.save(item);

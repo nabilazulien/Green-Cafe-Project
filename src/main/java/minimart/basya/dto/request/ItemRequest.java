@@ -13,6 +13,6 @@ public class ItemRequest {
     private String name;
     private String description;
     private String category;
-    private Double price;
+    private String price;
     private UUID createdBy;
 }

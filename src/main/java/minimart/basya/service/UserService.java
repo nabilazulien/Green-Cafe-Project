@@ -8,5 +8,4 @@ import java.util.UUID;
 public interface UserService {
     User registerNewAccount(RegisterRequest registerRequest);
     User delete(UUID id);
-
 }
