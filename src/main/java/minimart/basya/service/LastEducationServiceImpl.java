@@ -14,6 +14,7 @@ public class LastEducationServiceImpl implements LastEducationService {
     private LastEducationRepository lastEducationRepository;
     @Override
     public List getNewLastEducation() {
+
         return lastEducationRepository.findAll();
     }
 }

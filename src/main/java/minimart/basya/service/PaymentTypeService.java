@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface PaymentTypeService {
     List getNewPaymentType ();
-    
+
 }
