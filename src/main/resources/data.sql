@@ -38,23 +38,24 @@ CREATE TABLE if not exists`job_position` (
   PRIMARY KEY (`id`)
 );
 delete from job_position;
-insert into job_position(id, title, salary, created_at)
-values ("b47a5270-63f7-11ed-b70a-3c970ecfa524", "chef", 5000000, now());
-
-insert into job_position(id, title, salary, created_at)
-values ("b48ef152-63f7-11ed-b70a-3c970ecfa524v", "waitress", 3500000, now());
-
-insert into job_position(id, title, salary, created_at)
-values ("b4a34f3e-63f7-11ed-b70a-3c970ecfa524", "cashier", 4000000, now());
-
-insert into job_position(id, title, salary, created_at)
-values ("b4b5d408-63f7-11ed-b70a-3c970ecfa524", "manager", 7000000, now());
-
-insert into job_position(id, title, salary, created_at)
-values ("b4ff30f4-63f7-11ed-b70a-3c970ecfa524", "janitor", 3000000, now());
-
-insert into job_position(id, title, salary, created_at)
-values ("b51623c4-63f7-11ed-b70a-3c970ecfa524", "dishwasher", 2500000, now());
-
-insert into job_position(id, title, salary, created_at)
-values ("b533372a-63f7-11ed-b70a-3c970ecfa524", "barista", 4500000, now());
+INSERT INTO greencafe.job_position
+(id, created_at, salary, title)
+VALUES('167c435b-64b0-11ed-96cc-28e347cda29a', '2022-11-15 13:38:17', 5000000.0, 'chef');
+INSERT INTO greencafe.job_position
+(id, created_at, salary, title)
+VALUES('167c7e06-64b0-11ed-96cc-28e347cda29a', '2022-11-15 13:38:17', 3500000.0, 'waitress');
+INSERT INTO greencafe.job_position
+(id, created_at, salary, title)
+VALUES('167cb84a-64b0-11ed-96cc-28e347cda29a', '2022-11-15 13:38:17', 4000000.0, 'cashier');
+INSERT INTO greencafe.job_position
+(id, created_at, salary, title)
+VALUES('167cefd6-64b0-11ed-96cc-28e347cda29a', '2022-11-15 13:38:17', 7000000.0, 'manager');
+INSERT INTO greencafe.job_position
+(id, created_at, salary, title)
+VALUES('167d27f3-64b0-11ed-96cc-28e347cda29a', '2022-11-15 13:38:17', 3000000.0, 'janitor');
+INSERT INTO greencafe.job_position
+(id, created_at, salary, title)
+VALUES('167d67ce-64b0-11ed-96cc-28e347cda29a', '2022-11-15 13:38:17', 2500000.0, 'dishwasher');
+INSERT INTO greencafe.job_position
+(id, created_at, salary, title)
+VALUES('167da4ce-64b0-11ed-96cc-28e347cda29a', '2022-11-15 13:38:17', 4500000.0, 'barista');

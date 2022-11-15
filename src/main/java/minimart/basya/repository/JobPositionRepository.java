@@ -12,7 +12,4 @@ import java.util.UUID;
 public interface JobPositionRepository extends JpaRepository<JobPosition, UUID> {
     Optional<JobPosition> findById (UUID id);
 
-    @Override
-    List<JobPosition> findAll(Sort sort);
-
 }
