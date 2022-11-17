@@ -4,7 +4,11 @@ import lombok.extern.slf4j.Slf4j;
 import minimart.basya.dto.request.RegisterRequest;
 import minimart.basya.model.User;
 import minimart.basya.repository.UserRepository;
+
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -18,7 +22,7 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public User registerNewAccount(RegisterRequest registerRequest) {
+    public ResponseEntity<Object> registerNewAccount(RegisterRequest registerRequest) {
         User user = new User();
         user.setId(UUID.randomUUID());
         user.setLoginName(registerRequest.getLoginName());
@@ -31,7 +35,7 @@ public class UserServiceImpl implements UserService {
         user.setCreatedAt(LocalDateTime.now());
         userRepository.save(user);
         log.info("save user berhasil");
-        return user;
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @Override

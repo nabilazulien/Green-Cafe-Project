@@ -5,10 +5,16 @@ import lombok.extern.slf4j.Slf4j;
 import minimart.basya.dto.request.RegisterRequest;
 import minimart.basya.model.User;
 import minimart.basya.service.UserService;
+import minimart.basya.util.RegexUtil;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.UUID;
 
 @RestController
@@ -19,20 +25,74 @@ public class UserController {
     private UserService userService;
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public User createUser(@RequestBody String request) {
+    public ResponseEntity<Object> createUser(@RequestBody String request) {
         try {
+            //instansiasi RegisterRequest.class
             RegisterRequest registerRequest;
+
+            //proses mapping request
             ObjectMapper objectMapper = new ObjectMapper();
             registerRequest = objectMapper.readValue(request, RegisterRequest.class);
-           return userService.registerNewAccount(registerRequest);
-        } catch (Exception e){
+
+            // melakukan validasi request dengan memanggil method validas request
+            ArrayList<String> error = new ArrayList<>();
+            Boolean isValid = validasiRequest(registerRequest, error);
+            if (!isValid) {
+                log.error("request belum sesuai");
+                return new  ResponseEntity<>("error validasi : "+error,HttpStatus.BAD_REQUEST );
+            }
+            //masuk ke user service
+            return userService.registerNewAccount(registerRequest);
+        } catch (Exception e) {
+            //handle error saat masuk service
             log.error(e.getMessage());
-            return null;
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
     @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public User deleteUser(@RequestBody UUID id) {
-       return userService.delete(id);
+        return userService.delete(id);
 
     }
+
+    public Boolean validasiRequest(RegisterRequest registerRequest, ArrayList<String> error) {
+        Boolean isLoginName = RegexUtil.isAlphaNum(registerRequest.getLoginName());
+        if (!isLoginName) {
+            error.add("loginName hanya boleh angka dan huruf tanpa spasi");
+        }
+        Boolean isPassword = RegexUtil.isPassword(registerRequest.getPassword());
+        if (!isPassword){
+            error.add("password harus mengandung huruf  angka  karakter  kapital min 8 karakter");
+
+        }
+        Boolean isFullName = RegexUtil.isName(registerRequest.getFullName());
+        if (!isFullName){
+            error.add("nama hanya boleh huruf dan spasi");
+        }
+        Boolean isEmail = RegexUtil.isValidEmail(registerRequest.getEmail());
+        if (!isEmail){
+            error.add("format email salah");
+        }
+        Boolean isMobilePhoneNumber = RegexUtil.isNoTelephone(registerRequest.getMobilePhoneNumber());
+        if (!isMobilePhoneNumber){
+            error.add("nomor harus diawali dengan +62");
+        }
+        Boolean isAddress = RegexUtil.isAddress(registerRequest.getAddress());
+        if (!isAddress){
+            error.add("alamat tidak sesuai format");
+        }
+        Boolean isWorkPhoneNumber = RegexUtil.isNoTelephone(registerRequest.getWorkPhoneNumber());
+        if (!isWorkPhoneNumber){
+            error.add("work phone number tidak valid");
+        }
+
+        if (error.size()>0){
+            return false;
+        }
+
+        return true;
+    }
+
 }

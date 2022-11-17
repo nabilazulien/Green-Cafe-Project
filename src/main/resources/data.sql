@@ -72,13 +72,13 @@ CREATE TABLE if not exists`payment_type` (
   delete from payment_type;
   INSERT INTO greencafe.payment_type
   (id, name, code, created_at)
-  VALUES(uuid(), 'Credit, CR', 5000000.0, now());
+  VALUES(uuid(), 'Credit, CR', "CR", now());
   INSERT INTO greencafe.payment_type
   (id, name, code, created_at)
-  VALUES(uuid(), 'Debit, DE', 5000000.0, now());
+  VALUES(uuid(), 'Debit, DE', "DE", now());
   INSERT INTO greencafe.payment_type
   (id, name, code, created_at)
-  VALUES(uuid(), 'Cashless, CL', 5000000.0, now());
+  VALUES(uuid(), 'Cashless, CL', "CL", now());
   INSERT INTO greencafe.payment_type
   (id, name, code, created_at)
-  VALUES(uuid(), 'Cash, CA', 5000000.0, now());
+  VALUES(uuid(), 'Cash, CA', "CA", now());
