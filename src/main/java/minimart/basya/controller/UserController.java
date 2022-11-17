@@ -3,10 +3,8 @@ package minimart.basya.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import minimart.basya.dto.request.RegisterRequest;
-import minimart.basya.model.User;
 import minimart.basya.service.UserService;
 import minimart.basya.util.RegexUtil;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,8 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/user")
@@ -50,13 +46,6 @@ public class UserController {
         }
     }
 
-
-    @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public User deleteUser(@RequestBody UUID id) {
-        return userService.delete(id);
-
-    }
-
     public Boolean validasiRequest(RegisterRequest registerRequest, ArrayList<String> error) {
         Boolean isLoginName = RegexUtil.isAlphaNum(registerRequest.getLoginName());
         if (!isLoginName) {
@@ -87,11 +76,9 @@ public class UserController {
         if (!isWorkPhoneNumber){
             error.add("work phone number tidak valid");
         }
-
         if (error.size()>0){
             return false;
         }
-
         return true;
     }
 

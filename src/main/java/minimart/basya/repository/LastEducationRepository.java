@@ -8,4 +8,6 @@ import java.util.UUID;
 
 public interface LastEducationRepository extends JpaRepository<LastEducation, UUID>{
     Optional<LastEducation> findById (UUID id);
+
+    Optional<LastEducation> findByName (String name);
 }

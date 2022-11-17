@@ -21,8 +21,8 @@ public class EmployeeRequest {
     private String email;
     private String mobilePhoneNumber;
     private LocalDateTime createAt;
-    private UUID createdBy;
-    private Boolean isActive;
-    private JobPosition jobPositionId;
-    private LastEducation lastEducationId;
+    private String createdBy;
+    private String updatedBy;
+    private String jobPositionId;
+    private String lastEducationId;
 }

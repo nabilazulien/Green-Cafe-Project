@@ -5,7 +5,6 @@ import minimart.basya.dto.request.RegisterRequest;
 import minimart.basya.model.User;
 import minimart.basya.repository.UserRepository;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +22,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseEntity<Object> registerNewAccount(RegisterRequest registerRequest) {
+        log.info("Service register new account");
+
+        Optional<User> userByLogiName = userRepository.findByLoginName(registerRequest.getLoginName());
+        if(userByLogiName.isPresent()){
+            log.info("userLogin sudah ada");
+            return new ResponseEntity<>("userLogin sudah dipakai", HttpStatus.BAD_REQUEST);
+        }
+
         User user = new User();
         user.setId(UUID.randomUUID());
         user.setLoginName(registerRequest.getLoginName());

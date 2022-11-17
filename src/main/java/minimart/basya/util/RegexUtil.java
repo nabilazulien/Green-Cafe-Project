@@ -62,5 +62,12 @@ public class RegexUtil {
         //.{8,}             # anything, at least eight places though
         //$                 # end-of-string
     }
+
+    public static Boolean isDob(String dob) {
+        String regex = "^([0123][0-9])-([0][1-9]|[1][0-2])-\\d{4}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(dob);
+        return matcher.matches();
+    }
 }
 

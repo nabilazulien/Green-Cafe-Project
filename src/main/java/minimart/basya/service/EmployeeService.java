@@ -1,8 +1,9 @@
 package minimart.basya.service;
 
 import minimart.basya.dto.request.EmployeeRequest;
-import minimart.basya.model.Employee;
+import org.springframework.http.ResponseEntity;
+
 
 public interface EmployeeService {
-    Employee CreateNewEmployee(EmployeeRequest employeeRequest);
+    ResponseEntity<Object> CreateNewEmployee(EmployeeRequest employeeRequest);
 }
