@@ -6,9 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -29,15 +27,25 @@ public class Employee {
     private String pob;
     private String email;
     private String mobilePhoneNumber;
-    @Type(type = ("uuid-char"))
-    private UUID lastEducationId;
-    @Type(type = ("uuid-char"))
-    private UUID jobPositionId;
+
+    @ManyToOne(targetEntity = LastEducation.class)
+    @JoinColumn(name = "last_education_id", nullable = false)
+    private LastEducation lastEducationId;
+
+    @ManyToOne(targetEntity = JobPosition.class)
+    @JoinColumn(name = "job_position_id", nullable = false)
+    private JobPosition jobPositionId;
+
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    @Type(type = ("uuid-char"))
-    private UUID createdBy;
-    @Type(type = ("uuid-char"))
-    private UUID updatedBy;
+
+    @ManyToOne(targetEntity = User.class)
+    @JoinColumn(name = "created_by", nullable = false)
+    private User createdBy;
+
+    @ManyToOne(targetEntity = User.class)
+    @JoinColumn(name = "updated_by", nullable = false)
+    private User updatedBy;
+
     private Boolean isActive;
 }

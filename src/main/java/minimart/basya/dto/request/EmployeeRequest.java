@@ -3,6 +3,8 @@ package minimart.basya.dto.request;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import minimart.basya.model.JobPosition;
+import minimart.basya.model.LastEducation;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -21,6 +23,6 @@ public class EmployeeRequest {
     private LocalDateTime createAt;
     private UUID createdBy;
     private Boolean isActive;
-    private UUID jobPosition;
-    private UUID lastEducation;
+    private JobPosition jobPositionId;
+    private LastEducation lastEducationId;
 }

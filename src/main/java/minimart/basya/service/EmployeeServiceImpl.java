@@ -28,12 +28,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setEmail(employeeRequest.getEmail());
         employee.setMobilePhoneNumber(employeeRequest.getMobilePhoneNumber());
         employee.setCreatedAt(LocalDateTime.now());
-        employee.setCreatedBy(employeeRequest.getCreatedBy());
+//        employee.setCreatedBy(employeeRequest.getCreatedBy());
         employee.setIsActive(employeeRequest.getIsActive());
-        employee.setJobPositionId(employeeRequest.getJobPosition());
-        employee.setLastEducationId(employeeRequest.getLastEducation());
+        employee.setJobPositionId(employeeRequest.getJobPositionId());
+        employee.setLastEducationId(employeeRequest.getLastEducationId());
         employeeRepository.save(employee);
-        log.info("save employee brhasil");
+        log.info("save employee berhasil");
         return employee;
     }
 }

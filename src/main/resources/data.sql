@@ -59,3 +59,26 @@ VALUES('167d67ce-64b0-11ed-96cc-28e347cda29a', '2022-11-15 13:38:17', 2500000.0,
 INSERT INTO greencafe.job_position
 (id, created_at, salary, title)
 VALUES('167da4ce-64b0-11ed-96cc-28e347cda29a', '2022-11-15 13:38:17', 4500000.0, 'barista');
+
+
+
+CREATE TABLE if not exists`payment_type` (
+  `id` varchar(255) NOT NULL,
+  `name` varchar(225) DEFAULT NULL,
+  `code` varchar(225) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+  );
+  delete from payment_type;
+  INSERT INTO greencafe.payment_type
+  (id, name, code, created_at)
+  VALUES(uuid(), 'Credit, CR', 5000000.0, now());
+  INSERT INTO greencafe.payment_type
+  (id, name, code, created_at)
+  VALUES(uuid(), 'Debit, DE', 5000000.0, now());
+  INSERT INTO greencafe.payment_type
+  (id, name, code, created_at)
+  VALUES(uuid(), 'Cashless, CL', 5000000.0, now());
+  INSERT INTO greencafe.payment_type
+  (id, name, code, created_at)
+  VALUES(uuid(), 'Cash, CA', 5000000.0, now());

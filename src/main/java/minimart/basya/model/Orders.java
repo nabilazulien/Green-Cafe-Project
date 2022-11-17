@@ -6,9 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -23,12 +21,17 @@ public class Orders {
     @Type(type = ("uuid-char"))
     private UUID Id;
     private String code;
-    @Type(type = ("uuid-char"))
-    private UUID cashier;
+
+    @OneToOne(targetEntity = Employee.class)
+    @JoinColumn(name = "cashier", nullable = false)
+    private Employee cashier;
+
     private Double total;
     private Double subTotal;
     private Double tax;
-    @Type(type = ("uuid-char"))
-    private UUID paymentTypeId;
+
+    @OneToOne(targetEntity = PaymentType.class)
+    @JoinColumn(name = "payment_type_id", nullable = false)
+    private PaymentType paymentTypeId;
     private LocalDate createdAt;
 }

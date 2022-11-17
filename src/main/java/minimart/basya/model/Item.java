@@ -6,9 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -28,8 +26,12 @@ public class Item {
     private Double price;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    @Type(type = ("uuid-char"))
-    private UUID createdBy;
-    @Type(type = ("uuid-char"))
-    private UUID updatedBy;
+
+    @ManyToOne(targetEntity = User.class)
+    @JoinColumn(name = "created_by", nullable = false)
+    private User createdBy;
+
+    @ManyToOne(targetEntity = User.class)
+    @JoinColumn(name = "updated_by", nullable = false)
+    private User updatedBy;
 }

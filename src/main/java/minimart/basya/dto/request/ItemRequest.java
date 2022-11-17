@@ -3,6 +3,7 @@ package minimart.basya.dto.request;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import minimart.basya.model.User;
 
 import java.util.UUID;
 
@@ -14,5 +15,5 @@ public class ItemRequest {
     private String description;
     private String category;
     private String price;
-    private UUID createdBy;
+    private User createdBy;
 }

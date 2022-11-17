@@ -6,9 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.UUID;
 
 @Setter
@@ -21,10 +19,15 @@ public class OrderItem {
     @GeneratedValue
     @Type(type = ("uuid-char"))
     private UUID Id;
-    @Type(type = ("uuid-char"))
-    private UUID orderId;
-    @Type(type = ("uuid-char"))
-    private UUID itemId;
+
+    @OneToOne(targetEntity = Orders.class)
+    @JoinColumn(name = "order_id")
+    private Orders orderId;
+
+    @OneToOne(targetEntity = Item.class)
+    @JoinColumn(name = "item_id", nullable = false)
+    private Item itemId;
+
     private Integer quantity;
     private Double priceTotal;
     private String note;
