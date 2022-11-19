@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -74,6 +75,38 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setIsActive(true);
         employeeRepository.save(employee);
         log.info("save employee berhasil");
-        return new ResponseEntity<>(employee, HttpStatus.OK);
+        return new ResponseEntity<>("sukses", HttpStatus.OK);
+    }
+
+    @Transactional
+    @Override
+    public ResponseEntity<Object> UpdateEmployee(String id, EmployeeRequest employeeRequest) {
+        Optional<JobPosition> jobPositionByTitle = jobPositionRepository.findByTitle(employeeRequest.getJobPositionId());
+        if(!jobPositionByTitle.isPresent()){
+            log.error("jobPositionId tidak sesuai");
+            return new ResponseEntity<>("job jobPositionId tidak sesuai", HttpStatus.BAD_REQUEST);
+        }
+        Optional<LastEducation> lastEducationByName = lastEducationRepository.findByName(employeeRequest.getLastEducationId());
+        if(!lastEducationByName.isPresent()){
+            log.error("lastEducationId tidak sesuai");
+            return new ResponseEntity<>("lastEducationId tidak sesuai", HttpStatus.BAD_REQUEST);
+        }
+
+        Optional<Employee> employee = employeeRepository.findById(UUID.fromString(id));
+        if (!employee.isPresent()){
+            log.error("employee tidak sesuai");
+            return new ResponseEntity<>("employee tidak sesuai", HttpStatus.BAD_REQUEST);
+        }
+        employee.get().setFullName(employeeRequest.getFullName());
+        employee.get().setGender(employeeRequest.getGender());
+        employee.get().setDob(LocalDate.parse(employeeRequest.getDob()));
+        employee.get().setPob(employeeRequest.getPob());
+        employee.get().setEmail(employeeRequest.getEmail());
+        employee.get().setMobilePhoneNumber(employeeRequest.getMobilePhoneNumber());
+        employee.get().setJobPositionId(jobPositionByTitle.get());
+        employee.get().setLastEducationId(lastEducationByName.get());
+        employeeRepository.save(employee.get());
+        log.info("update berhasil");
+        return new ResponseEntity<>("sukses", HttpStatus.OK);
     }
 }
