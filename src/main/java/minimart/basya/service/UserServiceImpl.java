@@ -5,6 +5,7 @@ import minimart.basya.dto.request.request.RegisterRequest;
 import minimart.basya.model.User;
 import minimart.basya.repository.UserRepository;
 
+import minimart.basya.util.HasPass;
 import minimart.basya.util.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,7 +33,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseEntity<Object> registerNewAccount(RegisterRequest registerRequest) {
         log.info("Service register new account");
-
+        //validasi user berdasarkan login name
         Optional<User> userByLogiName = userRepository.findByLoginName(registerRequest.getLoginName());
         if (userByLogiName.isPresent()) {
             log.info("userLogin sudah ada");
@@ -42,7 +43,7 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setId(UUID.randomUUID());
         user.setLoginName(registerRequest.getLoginName());
-        user.setPassword(Hass(registerRequest.getPassword()));
+        user.setPassword(HasPass.hass(registerRequest.getPassword()));
         user.setFullName(registerRequest.getFullName());
         user.setEmail(registerRequest.getEmail());
         user.setMobilePhoneNumber(registerRequest.getMobilePhoneNumber());
@@ -81,7 +82,7 @@ public class UserServiceImpl implements UserService {
         }
         User user = userByLoginName.get();
         user.setLoginName(registerRequest.getLoginName());
-        user.setPassword(Hass(registerRequest.getPassword()));
+        user.setPassword(HasPass.hass(registerRequest.getPassword()));
         user.setFullName(registerRequest.getFullName());
         user.setEmail(registerRequest.getEmail());
         user.setMobilePhoneNumber(registerRequest.getMobilePhoneNumber());
@@ -103,25 +104,5 @@ public class UserServiceImpl implements UserService {
         return new ResponseEntity<>(user.get(),HttpStatus.OK);
     }
 
-
-
-
-    public String Hass(String passwordToHash){
-        String generatedPassword = null;
-        try {
-            String salt="lslkal";
-            MessageDigest md = MessageDigest.getInstance("SHA-512");
-            md.update(salt.getBytes(StandardCharsets.UTF_8));
-            byte[] bytes = md.digest(passwordToHash.getBytes(StandardCharsets.UTF_8));
-            StringBuilder sb = new StringBuilder();
-            for(int i=0; i< bytes.length ;i++){
-                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
-            }
-            generatedPassword = sb.toString();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return generatedPassword;
-    }
 
 }

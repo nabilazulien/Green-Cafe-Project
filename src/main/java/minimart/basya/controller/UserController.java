@@ -22,6 +22,7 @@ public class UserController {
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> createUser(@RequestBody String request) {
+        log.info("user controller create user");
         try {
             //instansiasi RegisterRequest.class
             RegisterRequest registerRequest;
@@ -48,6 +49,7 @@ public class UserController {
 
     @DeleteMapping
     public ResponseEntity<Object> deleteUser(@RequestHeader String token) {
+        log.info("user controller delete user");
         try {
             return userService.delete(token);
         } catch (Exception e) {
@@ -59,6 +61,7 @@ public class UserController {
 
     @PutMapping
     public ResponseEntity<Object> updateUser(@RequestHeader String token,@RequestBody String request) {
+        log.info("user controller user update");
         try {
             //instansiasi RegisterRequest.class
             RegisterRequest registerRequest;
