@@ -2,8 +2,7 @@ package minimart.basya.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import minimart.basya.dto.request.ItemRequest;
-import minimart.basya.model.Item;
+import minimart.basya.dto.request.request.ItemRequest;
 import minimart.basya.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

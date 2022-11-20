@@ -1,7 +1,7 @@
 package minimart.basya.service;
 
 import lombok.extern.slf4j.Slf4j;
-import minimart.basya.dto.request.RegisterRequest;
+import minimart.basya.dto.request.request.RegisterRequest;
 import minimart.basya.model.User;
 import minimart.basya.repository.UserRepository;
 

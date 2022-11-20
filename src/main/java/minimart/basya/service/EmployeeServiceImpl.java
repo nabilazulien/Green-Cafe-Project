@@ -1,7 +1,7 @@
 package minimart.basya.service;
 
 import lombok.extern.slf4j.Slf4j;
-import minimart.basya.dto.request.EmployeeRequest;
+import minimart.basya.dto.request.request.EmployeeRequest;
 import minimart.basya.model.Employee;
 import minimart.basya.model.JobPosition;
 import minimart.basya.model.LastEducation;

@@ -1,7 +1,6 @@
 package minimart.basya.service;
 
-import minimart.basya.dto.request.ItemRequest;
-import minimart.basya.model.Item;
+import minimart.basya.dto.request.request.ItemRequest;
 import org.springframework.http.ResponseEntity;
 
 public interface ItemService {

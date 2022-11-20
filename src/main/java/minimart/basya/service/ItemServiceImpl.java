@@ -1,7 +1,7 @@
 package minimart.basya.service;
 
 import lombok.extern.slf4j.Slf4j;
-import minimart.basya.dto.request.ItemRequest;
+import minimart.basya.dto.request.request.ItemRequest;
 import minimart.basya.model.Item;
 import minimart.basya.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;

@@ -1,4 +1,4 @@
-package minimart.basya.dto.request;
+package minimart.basya.dto.request.request;
 
 import lombok.Getter;
 import lombok.Setter;
