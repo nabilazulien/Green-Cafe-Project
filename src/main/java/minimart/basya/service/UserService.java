@@ -8,5 +8,9 @@ import java.util.UUID;
 
 public interface UserService {
     ResponseEntity registerNewAccount(RegisterRequest registerRequest);
-    User delete(UUID id);
+    ResponseEntity delete(String token);
+
+    ResponseEntity updateUser(String token,RegisterRequest registerRequest);
+
+    ResponseEntity getUser(String token);
 }

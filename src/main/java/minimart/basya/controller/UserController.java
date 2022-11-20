@@ -35,7 +35,7 @@ public class UserController {
             Boolean isValid = validasiRequest(registerRequest, error);
             if (!isValid) {
                 log.error("request belum sesuai");
-                return new  ResponseEntity<>("error validasi : "+error,HttpStatus.BAD_REQUEST );
+                return new ResponseEntity<>("error validasi : " + error, HttpStatus.BAD_REQUEST);
             }
             //masuk ke user service
             return userService.registerNewAccount(registerRequest);
@@ -46,37 +46,87 @@ public class UserController {
         }
     }
 
+    @DeleteMapping
+    public ResponseEntity<Object> deleteUser(@RequestHeader String token) {
+        try {
+            return userService.delete(token);
+        } catch (Exception e) {
+            e.getMessage();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    @PutMapping
+    public ResponseEntity<Object> updateUser(@RequestHeader String token,@RequestBody String request) {
+        try {
+            //instansiasi RegisterRequest.class
+            RegisterRequest registerRequest;
+
+            //proses mapping request
+            ObjectMapper objectMapper = new ObjectMapper();
+            registerRequest = objectMapper.readValue(request, RegisterRequest.class);
+
+            // melakukan validasi request dengan memanggil method validas request
+            ArrayList<String> error = new ArrayList<>();
+            Boolean isValid = validasiRequest(registerRequest, error);
+            if (!isValid) {
+                log.error("request belum sesuai");
+                return new ResponseEntity<>("error validasi : " + error, HttpStatus.BAD_REQUEST);
+            }
+            return userService.updateUser(token,registerRequest);
+        } catch (Exception e) {
+            e.getMessage();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping
+    public ResponseEntity<Object> getUser(@RequestHeader String token) {
+        try {
+            return userService.getUser(token);
+        } catch (Exception e) {
+            e.getMessage();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+
+
+
+
     public Boolean validasiRequest(RegisterRequest registerRequest, ArrayList<String> error) {
         Boolean isLoginName = RegexUtil.isAlphaNum(registerRequest.getLoginName());
         if (!isLoginName) {
             error.add("loginName hanya boleh angka dan huruf tanpa spasi");
         }
         Boolean isPassword = RegexUtil.isPassword(registerRequest.getPassword());
-        if (!isPassword){
+        if (!isPassword) {
             error.add("password harus mengandung huruf  angka  karakter  kapital min 8 karakter");
 
         }
         Boolean isFullName = RegexUtil.isName(registerRequest.getFullName());
-        if (!isFullName){
+        if (!isFullName) {
             error.add("nama hanya boleh huruf dan spasi");
         }
         Boolean isEmail = RegexUtil.isValidEmail(registerRequest.getEmail());
-        if (!isEmail){
+        if (!isEmail) {
             error.add("format email salah");
         }
         Boolean isMobilePhoneNumber = RegexUtil.isNoTelephone(registerRequest.getMobilePhoneNumber());
-        if (!isMobilePhoneNumber){
+        if (!isMobilePhoneNumber) {
             error.add("nomor harus diawali dengan +62");
         }
         Boolean isAddress = RegexUtil.isAddress(registerRequest.getAddress());
-        if (!isAddress){
+        if (!isAddress) {
             error.add("alamat tidak sesuai format");
         }
         Boolean isWorkPhoneNumber = RegexUtil.isNoTelephone(registerRequest.getWorkPhoneNumber());
-        if (!isWorkPhoneNumber){
+        if (!isWorkPhoneNumber) {
             error.add("work phone number tidak valid");
         }
-        if (error.size()>0){
+        if (error.size() > 0) {
             return false;
         }
         return true;

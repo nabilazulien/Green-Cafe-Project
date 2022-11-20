@@ -12,6 +12,9 @@ import org.springframework.http.ResponseEntity;
 
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Optional;
@@ -31,7 +34,7 @@ public class UserServiceImpl implements UserService {
         log.info("Service register new account");
 
         Optional<User> userByLogiName = userRepository.findByLoginName(registerRequest.getLoginName());
-        if(userByLogiName.isPresent()){
+        if (userByLogiName.isPresent()) {
             log.info("userLogin sudah ada");
             return new ResponseEntity<>("userLogin sudah dipakai", HttpStatus.BAD_REQUEST);
         }
@@ -39,7 +42,7 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setId(UUID.randomUUID());
         user.setLoginName(registerRequest.getLoginName());
-        user.setPassword(registerRequest.getPassword());
+        user.setPassword(Hass(registerRequest.getPassword()));
         user.setFullName(registerRequest.getFullName());
         user.setEmail(registerRequest.getEmail());
         user.setMobilePhoneNumber(registerRequest.getMobilePhoneNumber());
@@ -52,18 +55,73 @@ public class UserServiceImpl implements UserService {
         String token = jwtUtils.generateToken(user.getLoginName());
 
         HashMap<Object, Object> map = new HashMap<>();
-        map.put("userData",user);
-        map.put("token",token);
+        map.put("token", token);
 
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
     @Override
-    public User delete(UUID id) {
-        Optional<User> user = userRepository.findById(id);
+    public ResponseEntity<Object> delete(String token) {
+
+        String loginName = jwtUtils.getUsernameFromToken(token);
+
+        Optional<User> user = userRepository.findByLoginName(loginName);
         userRepository.delete(user.get());
-        log.info("user telah dihapus dengan id "+id);
-        return null;
+        log.info("username telah dihapus dengan id--> " + loginName);
+        return new ResponseEntity<>("Delete Succes", HttpStatus.OK);
 
     }
+
+    @Override
+    public ResponseEntity updateUser(String token,RegisterRequest registerRequest) {
+        String loginName = jwtUtils.getUsernameFromToken(token);
+        Optional<User> userByLoginName = userRepository.findByLoginName(loginName);
+        if(!userByLoginName.isPresent()){
+            return new ResponseEntity<>("Token failed",HttpStatus.BAD_REQUEST);
+        }
+        User user = userByLoginName.get();
+        user.setLoginName(registerRequest.getLoginName());
+        user.setPassword(Hass(registerRequest.getPassword()));
+        user.setFullName(registerRequest.getFullName());
+        user.setEmail(registerRequest.getEmail());
+        user.setMobilePhoneNumber(registerRequest.getMobilePhoneNumber());
+        user.setAddress(registerRequest.getAddress());
+        user.setWorkPhoneNumber(registerRequest.getWorkPhoneNumber());
+        user.setCreatedAt(LocalDateTime.now());
+        userRepository.save(user);
+        log.info("update user berhasil");
+        return new ResponseEntity<>("Sukses update",HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity getUser(String token) {
+        String loginName = jwtUtils.getUsernameFromToken(token);
+        Optional<User> user = userRepository.findByLoginName(loginName);
+        if(!user.isPresent()){
+            return new ResponseEntity<>("token failed",HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(user.get(),HttpStatus.OK);
+    }
+
+
+
+
+    public String Hass(String passwordToHash){
+        String generatedPassword = null;
+        try {
+            String salt="lslkal";
+            MessageDigest md = MessageDigest.getInstance("SHA-512");
+            md.update(salt.getBytes(StandardCharsets.UTF_8));
+            byte[] bytes = md.digest(passwordToHash.getBytes(StandardCharsets.UTF_8));
+            StringBuilder sb = new StringBuilder();
+            for(int i=0; i< bytes.length ;i++){
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            generatedPassword = sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return generatedPassword;
+    }
+
 }
