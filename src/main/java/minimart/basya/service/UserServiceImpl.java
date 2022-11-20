@@ -5,12 +5,15 @@ import minimart.basya.dto.request.request.RegisterRequest;
 import minimart.basya.model.User;
 import minimart.basya.repository.UserRepository;
 
+import minimart.basya.util.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -19,6 +22,9 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private JwtUtils jwtUtils;
+
 
     @Override
     public ResponseEntity<Object> registerNewAccount(RegisterRequest registerRequest) {
@@ -42,7 +48,14 @@ public class UserServiceImpl implements UserService {
         user.setCreatedAt(LocalDateTime.now());
         userRepository.save(user);
         log.info("save user berhasil");
-        return new ResponseEntity<>(user, HttpStatus.OK);
+
+        String token = jwtUtils.generateToken(user.getLoginName());
+
+        HashMap<Object, Object> map = new HashMap<>();
+        map.put("userData",user);
+        map.put("token",token);
+
+        return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
     @Override
